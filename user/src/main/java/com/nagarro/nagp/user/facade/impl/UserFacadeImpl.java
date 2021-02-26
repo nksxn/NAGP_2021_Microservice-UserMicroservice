@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.nagarro.nagp.user.entity.User;
 import com.nagarro.nagp.user.facade.UserFacade;
 import com.nagarro.nagp.user.service.UserService;
 
+@Component
 public class UserFacadeImpl implements UserFacade {
 	
 	@Autowired

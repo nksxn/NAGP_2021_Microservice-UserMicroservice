@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.nagarro.nagp.user.dao.UserDao;
 import com.nagarro.nagp.user.entity.User;
 
+@Repository
 public class UserDaoImpl implements UserDao {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserDaoImpl.class);

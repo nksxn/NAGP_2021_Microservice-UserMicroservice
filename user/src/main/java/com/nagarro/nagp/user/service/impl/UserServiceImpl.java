@@ -5,11 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nagarro.nagp.user.dao.UserDao;
 import com.nagarro.nagp.user.entity.User;
 import com.nagarro.nagp.user.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
