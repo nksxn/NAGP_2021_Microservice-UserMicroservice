@@ -3,6 +3,8 @@ package com.nagarro.nagp.user.controller;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,8 @@ import com.nagarro.nagp.user.facade.UserFacade;
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
+
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Value("${server.port}")
 	private int port;
@@ -32,6 +36,8 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<Map<String, Object>> getAllUsers() {
 		
+		LOG.info("Working from port " + port +" of Users microservice");
+		
 		Map<String, Object> responseData = userFacade.getAllUsers();
 
 		return new ResponseEntity<Map<String, Object>>(responseData, new HttpHeaders(), HttpStatus.OK);
@@ -40,6 +46,7 @@ public class UserController {
 	
 	@PostMapping()
 	public ResponseEntity<Void> addUser(@RequestBody User user) {
+		LOG.info("Working from port " + port +" of Users microservice");
 		try{
 			userFacade.addUser(user);
 			HttpHeaders headers = new HttpHeaders();
@@ -51,12 +58,14 @@ public class UserController {
 	
 	@GetMapping("/{username}")
 	public ResponseEntity<Map<String, Object>> getUserByUsername(@PathVariable("username") String username) {
+		LOG.info("Working from port " + port +" of Users microservice");
 		Map<String, Object> responseData = userFacade.getUserByUsername(username);
 		return new ResponseEntity<Map<String, Object>>(responseData, new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	@PutMapping()
 	public ResponseEntity<Void> editUser(@RequestBody User user) {
+		LOG.info("Working from port " + port +" of Users microservice");
 		HttpHeaders headers = new HttpHeaders();
 		if(userFacade.updateUser(user)) {
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
