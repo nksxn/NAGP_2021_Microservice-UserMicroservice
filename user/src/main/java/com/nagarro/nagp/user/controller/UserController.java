@@ -1,7 +1,6 @@
 package com.nagarro.nagp.user.controller;
 
-
-import java.util.Map;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,52 +25,50 @@ import com.nagarro.nagp.user.facade.UserFacade;
 public class UserController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Value("${server.port}")
 	private int port;
-	
+
 	@Autowired
 	UserFacade userFacade;
-	
-	@GetMapping
-	public ResponseEntity<Map<String, Object>> getAllUsers() {
-		
-		LOG.info("Working from port " + port +" of Users microservice");
-		
-		Map<String, Object> responseData = userFacade.getAllUsers();
 
-		return new ResponseEntity<Map<String, Object>>(responseData, new HttpHeaders(), HttpStatus.OK);
+	@GetMapping
+	public ResponseEntity<List<User>> getAllUsers() {
+
+		LOG.info("Working from port " + port + " of Users microservice");
+
+		List<User> responseData = userFacade.getAllUsers();
+
+		return new ResponseEntity<List<User>>(responseData, new HttpHeaders(), HttpStatus.OK);
 	}
-	
-	
+
 	@PostMapping()
 	public ResponseEntity<Void> addUser(@RequestBody User user) {
-		LOG.info("Working from port " + port +" of Users microservice");
-		try{
+		LOG.info("Working from port " + port + " of Users microservice");
+		try {
 			userFacade.addUser(user);
 			HttpHeaders headers = new HttpHeaders();
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return new ResponseEntity<Void>(new HttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
+
 	@GetMapping("/{username}")
-	public ResponseEntity<Map<String, Object>> getUserByUsername(@PathVariable("username") String username) {
-		LOG.info("Working from port " + port +" of Users microservice");
-		Map<String, Object> responseData = userFacade.getUserByUsername(username);
-		return new ResponseEntity<Map<String, Object>>(responseData, new HttpHeaders(), HttpStatus.OK);
+	public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
+		LOG.info("Working from port " + port + " of Users microservice");
+		User responseData = userFacade.getUserByUsername(username);
+		return new ResponseEntity<User>(responseData, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@PutMapping()
 	public ResponseEntity<Void> editUser(@RequestBody User user) {
-		LOG.info("Working from port " + port +" of Users microservice");
+		LOG.info("Working from port " + port + " of Users microservice");
 		HttpHeaders headers = new HttpHeaders();
-		if(userFacade.updateUser(user)) {
+		if (userFacade.updateUser(user)) {
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<Void>(headers, HttpStatus.BAD_REQUEST);
 	}
-
 
 }
