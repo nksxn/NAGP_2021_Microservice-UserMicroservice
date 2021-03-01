@@ -62,13 +62,20 @@ public class UserController {
 	}
 
 	@PutMapping()
-	public ResponseEntity<Void> editUser(@RequestBody User user) {
+	public ResponseEntity<Void> updateUser(@RequestBody User user) {
 		LOG.info("Working from port " + port + " of Users microservice");
 		HttpHeaders headers = new HttpHeaders();
 		if (userFacade.updateUser(user)) {
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<Void>(headers, HttpStatus.BAD_REQUEST);
+	}
+
+	@PostMapping("/notifyUser")
+	public ResponseEntity<Void> notifyUser(@RequestBody String username) {
+		userFacade.notifyUser(username);
+		HttpHeaders headers = new HttpHeaders();
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 }

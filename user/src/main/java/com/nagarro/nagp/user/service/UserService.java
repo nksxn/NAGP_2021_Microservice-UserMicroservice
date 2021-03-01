@@ -17,4 +17,6 @@ public interface UserService {
 
 	public boolean updateUser(User user);
 
+	public void notifyUser(String username);
+
 }

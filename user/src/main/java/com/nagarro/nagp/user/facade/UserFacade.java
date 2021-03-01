@@ -17,4 +17,6 @@ public interface UserFacade {
 
 	public boolean updateUser(User user);
 
+	public void notifyUser(String username);
+
 }

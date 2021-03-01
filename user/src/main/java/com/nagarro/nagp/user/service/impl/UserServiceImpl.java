@@ -16,18 +16,18 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-	
+
 	@Override
 	public List<User> getAllUsers() {
 		return userDao.getAllUsers();
-		
+
 	}
 
 	@Override
 	public void addUser(User user) {
-		LocalDateTime now = LocalDateTime.now();  
+		LocalDateTime now = LocalDateTime.now();
 		user.setCreationTime(dtf.format(now));
 		user.setModifiedTime(dtf.format(now));
 		userDao.addUser(user);
@@ -43,6 +43,16 @@ public class UserServiceImpl implements UserService {
 		LocalDateTime now = LocalDateTime.now();
 		user.setModifiedTime(dtf.format(now));
 		return userDao.updateUser(user);
+	}
+
+	@Override
+	public void notifyUser(String username) {
+		User user = getUserByUsername(username);
+		notify(user);
+	}
+
+	private void notify(User user) {
+		System.out.println("Handle User notification here");
 	}
 
 }

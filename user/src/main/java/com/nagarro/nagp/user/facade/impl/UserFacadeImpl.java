@@ -39,4 +39,9 @@ public class UserFacadeImpl implements UserFacade {
 		return userService.updateUser(user);
 	}
 
+	@Override
+	public void notifyUser(String username) {
+		userService.notifyUser(username);
+	}
+
 }
